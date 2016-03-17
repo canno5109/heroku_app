@@ -1,0 +1,14 @@
+machine:
+  timezone:
+    Asia/Tokyo
+ruby:
+  version: 2.2.2
+deployment:
+  production:
+    branch: master
+    commands:
+      - heroku maintenance:on --heroku_app
+      - heroku scale worker=0 --heroku_app
+      - git push -f git@heroku.com:heroku_app.git $CIRCLE_SHA1:refs/heads/master
+      - heroku run 'rake db:migrate; rake db:seed_fu' --app heroku_app
+      - heroku maintenance:off --app heroku_app
