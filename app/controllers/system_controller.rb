@@ -1,7 +1,6 @@
 class SystemController < ApplicationController
   def index
-    require "date"
     @version = "1.0"
-    @date = DateTime.now.to_s(:db)
+    @date = DateTime.now.strftime('%Y-%m-%d %H-%M')
   end
 end
